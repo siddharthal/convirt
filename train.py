@@ -102,7 +102,10 @@ class SimCLR(object):
                 xis = xis.to(self.device)
                 xls = xls.to(self.device)
 
+                # xls['input_ids'] = xls['input_ids'].long()
+                # xls['attention_mask'] = xls['attention_mask'].long()
                 # get the representations and the projections
+                # print(model.type, xls['input_ids'].dtype, xls['attention_mask'].dtype)
                 zis, zls = model(xis, xls)  # [N,C]
 
                 # get the representations and the projections
@@ -130,6 +133,7 @@ class SimCLR(object):
             # validate the model if requested
             if epoch_counter % self.config['eval_every_n_epochs'] == 0:
                 valid_loss = self._validate(model, valid_loader, n_iter)
+                print(valid_loss)
                 if valid_loss < best_valid_loss:
                     # save the model weights
                     best_valid_loss = valid_loss

@@ -45,9 +45,7 @@ class ClrDataset(Dataset):
         if torch.is_tensor(idx):
             idx = idx.tolist()
 
-        img_name = os.path.join(self.img_root_dir,
-                                self.clr_frame.iloc[idx, self.img_path_col]
-                                )
+        img_name = os.path.join(self.img_root_dir, self.clr_frame.iloc[idx, self.img_path_col])
         image = Image.open(img_name)
         if self.input_shape[2] == 3:
             image = image.convert('RGB')
@@ -56,6 +54,7 @@ class ClrDataset(Dataset):
         #chooosig a phrase
         if not self.text_from_files:
             text = self.clr_frame.iloc[idx, self.text_col]
+            # print(text)
             text = text.replace("\n", "")
             ls_text = text.split(".")
             if '' in ls_text:
@@ -63,9 +62,7 @@ class ClrDataset(Dataset):
             phrase = random.choice(ls_text)
 
         else:
-            text_path = os.path.join(self.text_root_dir, 
-                                     self.clr_frame.iloc[idx, self.text_col]
-                                    )
+            text_path = os.path.join(self.text_root_dir, self.clr_frame.iloc[idx, self.text_col])
             with open(text_path) as f:
                 content = f.readlines()
             content = content.replace("\n", "")

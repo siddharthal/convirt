@@ -2,7 +2,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 from torch.utils.data.sampler import SubsetRandomSampler
 import torchvision.transforms as transforms
-from dataloader.gaussian_blur import GaussianBlur
+# from dataloader.gaussian_blur import GaussianBlur
 from torchvision import datasets
 from .dataset import ClrDataset
 
@@ -58,7 +58,7 @@ class DataSetWrapper(object):
         # get a set of data augmentation transformations as described in the SimCLR paper.
         color_jitter = transforms.ColorJitter(0.8 * self.s, 0.8 * self.s, 0.8 * self.s, 0.2 * self.s)
         data_transforms = transforms.Compose([
-                                              transforms.Scale((self.input_shape[0], self.input_shape[1])),
+                                              transforms.Resize((self.input_shape[0], self.input_shape[1])),
                                               transforms.RandomResizedCrop(size=self.input_shape[0], scale=(0.8, 1.0)),
                                               transforms.RandomHorizontalFlip(),
                                             #   transforms.RandomApply([color_jitter], p=0.8),
